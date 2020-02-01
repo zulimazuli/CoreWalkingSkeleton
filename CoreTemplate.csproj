@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-CoreTemplate-1AEBC942-1DEE-4BE8-B70A-C8A0FC8FBCFF</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200131161011_CreateAppliacationUser.cs" />
+    <Compile Remove="Data\Migrations\20200131161011_CreateAppliacationUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200131161126_CreateAppliacationUser.cs" />
+    <Compile Remove="Data\Migrations\20200131161126_CreateAppliacationUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200131161437_CreateAppliacationUser.cs" />
+    <Compile Remove="Data\Migrations\20200131161437_CreateAppliacationUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200131165848_CustomAppliactionUser.cs" />
+    <Compile Remove="Data\Migrations\20200131165848_CustomAppliactionUser.Designer.cs" />
+    <Compile Remove="Migrations\20200201103544_UpdateAppUser.cs" />
+    <Compile Remove="Migrations\20200201103544_UpdateAppUser.Designer.cs" />
+    <Compile Remove="Migrations\20200201103935_InitialMigration.cs" />
+    <Compile Remove="Migrations\20200201103935_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200201125840_DbModelChanges.cs" />
+    <Compile Remove="Migrations\20200201125840_DbModelChanges.Designer.cs" />
+    <Compile Remove="Migrations\20200201130458_DbModelChanges.cs" />
+    <Compile Remove="Migrations\20200201130458_DbModelChanges.Designer.cs" />
+    <Compile Remove="Migrations\20200201130631_InitialMigration.cs" />
+    <Compile Remove="Migrations\20200201130631_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200201154339_AddPersonalInformation.cs" />
+    <Compile Remove="Migrations\20200201154339_AddPersonalInformation.Designer.cs" />
+    <Compile Remove="Migrations\20200201154511_AddPersonalInformation.cs" />
+    <Compile Remove="Migrations\20200201154511_AddPersonalInformation.Designer.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
+</Project>
