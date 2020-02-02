@@ -42,10 +42,7 @@ namespace CoreTemplate.Helpers
                 .RemoveDiacritics()
                 .RemoveNonAlphabeticCharacters();
 
-            if(!string.IsNullOrWhiteSpace(suffix))
-            {
-                username = string.Concat(username, suffix);
-            }
+            if (!string.IsNullOrWhiteSpace(suffix)) username = string.Concat(username, suffix);
 
             return username;
         }

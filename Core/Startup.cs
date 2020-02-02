@@ -1,16 +1,17 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using CoreTemplate.Data;
 using CoreTemplate.Helpers;
 using CoreTemplate.Services;
-using CoreTemplate.Data;
-using CoreTemplate.Helpers;
 using CoreTemplate.Models;
-using CoreTemplate.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+// ReSharper disable All
 
 namespace CoreTemplate
 {
@@ -40,10 +41,24 @@ namespace CoreTemplate
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.Cookie.Name = "YourAppCookieName";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+                options.LoginPath = "/Identity/Account/Login";
+                // ReturnUrlParameter requires 
+                //using Microsoft.AspNetCore.Authentication.Cookies;
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.SlidingExpiration = true;
+            });
+
             //services.Configure<ApplicationOptions>(Configuration.GetSection("ApplicationOptions"));
 
             services.AddTransient<IPersonManager, PersonManager>();
             services.AddTransient<IUsernameHelper, UsernameHelper>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

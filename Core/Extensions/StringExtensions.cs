@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CoreTemplate.Extensions
 {
@@ -11,8 +8,8 @@ namespace CoreTemplate.Extensions
     {
         public static string RemoveNonAlphabeticCharacters(this string str)
         {
-            char[] arr = str.ToCharArray();
-            arr = Array.FindAll<char>(arr, char.IsLetter);
+            var arr = str.ToCharArray();
+            arr = Array.FindAll(arr, char.IsLetter);
             return new string(arr);
         }
 
@@ -24,10 +21,7 @@ namespace CoreTemplate.Extensions
             foreach (var c in normalizedString)
             {
                 var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                {
-                    stringBuilder.Append(c);
-                }
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark) stringBuilder.Append(c);
             }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
