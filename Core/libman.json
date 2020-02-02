@@ -5,6 +5,10 @@
     {
       "library": "font-awesome@5.12.0",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "startbootstrap-sb-admin-2@4.0.7",
+      "destination": "wwwroot/lib/sb-admin-2/"
     }
   ]
 }
