@@ -2,8 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using CoreTemplate.Helpers;
-using CoreTemplate.Models;
 using CoreTemplate.Services;
+using CoreTemplate.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -116,7 +116,7 @@ namespace CoreTemplate.Areas.Identity.Pages.Account.Manage
 
             if (Input.RegenerateUsername)
             {
-                var newUserName = _usernameHelper.GenerateUsername(Input.FirstName, Input.LastName);
+                var newUserName = await _usernameHelper.GenerateUniqueUsernameAsync(Input.FirstName, Input.LastName);
                 await _userManager.SetUserNameAsync(user, newUserName);
             }
 

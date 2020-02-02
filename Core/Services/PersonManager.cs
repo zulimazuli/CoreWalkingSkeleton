@@ -1,13 +1,11 @@
-﻿using CoreTemplate.Data;
-using CoreTemplate.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using CoreTemplate.Data;
+using CoreTemplate.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreTemplate.Services
 {

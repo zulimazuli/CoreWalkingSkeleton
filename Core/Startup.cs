@@ -1,13 +1,16 @@
+using CoreTemplate.Data;
+using CoreTemplate.Helpers;
+using CoreTemplate.Services;
+using CoreTemplate.Data;
+using CoreTemplate.Helpers;
+using CoreTemplate.Models;
+using CoreTemplate.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using CoreTemplate.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CoreTemplate.Models;
-using CoreTemplate.Services;
-using CoreTemplate.Helpers;
 
 namespace CoreTemplate
 {

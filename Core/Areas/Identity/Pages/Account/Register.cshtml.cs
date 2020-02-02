@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using CoreTemplate.Attributes;
+using CoreTemplate.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,17 +15,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using CoreTemplate.Models;
-using CoreTemplate.Attributes;
-using System;
-using CoreTemplate.Helpers;
 
 namespace CoreTemplate.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private const string RegistrationToken = "xyz";
-
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -94,7 +91,7 @@ namespace CoreTemplate.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var userName = _usernameHelper.GenerateUsername(Input.FirstName, Input.LastName);
+                var userName = await _usernameHelper.GenerateUniqueUsernameAsync(Input.FirstName, Input.LastName);
 
                 var personalinfo = new Person { FirstName = Input.FirstName, LastName = Input.LastName };
                 var user = new ApplicationUser { UserName = userName, Email = Input.Email, Person = personalinfo};

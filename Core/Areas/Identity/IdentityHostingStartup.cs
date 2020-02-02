@@ -1,5 +1,4 @@
 ﻿using System;
-using CoreTemplate.Data;
 using CoreTemplate.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
