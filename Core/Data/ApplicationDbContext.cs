@@ -12,18 +12,18 @@ namespace CoreTemplate.Data
         {
         }
 
-        public DbSet<PersonalInformation> PersonalInformation { get; set; }
+        public DbSet<Person> Person { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<PersonalInformation>()
+            builder.Entity<Person>()
                 .HasKey(p => p.Id);
 
-            builder.Entity<PersonalInformation>()
+            builder.Entity<Person>()
                 .HasOne(p => p.ApplicationUser)
-                .WithOne(u => u.PersonalInfo)
-                .HasForeignKey<ApplicationUser>(u => u.PersonalInformationId);
+                .WithOne(u => u.Person)
+                .HasForeignKey<ApplicationUser>(u => u.PersonId);
 
 
 

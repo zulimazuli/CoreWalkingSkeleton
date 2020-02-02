@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CoreTemplate.Models;
+using CoreTemplate.Services;
+using CoreTemplate.Helpers;
 
 namespace CoreTemplate
 {
@@ -35,7 +37,10 @@ namespace CoreTemplate
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.Configure<ApplicationOptions>(Configuration.GetSection("ApplicationOptions"));
+            //services.Configure<ApplicationOptions>(Configuration.GetSection("ApplicationOptions"));
+
+            services.AddTransient<IPersonManager, PersonManager>();
+            services.AddTransient<IUsernameHelper, UsernameHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

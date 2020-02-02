@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using CoreTemplate.Helpers;
 using CoreTemplate.Models;
+using CoreTemplate.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,13 +14,19 @@ namespace CoreTemplate.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IPersonManager _personManager;
+        private readonly IUsernameHelper _usernameHelper;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IPersonManager personManager,
+            IUsernameHelper usernameHelper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _personManager = personManager;
+            _usernameHelper = usernameHelper;
         }
 
         public string Username { get; set; }
@@ -34,6 +42,17 @@ namespace CoreTemplate.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]            
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Re-genarate Username?")]
+            public bool RegenerateUsername { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -41,11 +60,16 @@ namespace CoreTemplate.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            Username = userName;
+            var firstName = (string) await _personManager.GetAsync(user, x => x.FirstName);
+            var lastName = (string)await _personManager.GetAsync(user, x => x.LastName);
+
+            Username = userName;           
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = firstName,
+                LastName = lastName
             };
         }
 
@@ -84,6 +108,16 @@ namespace CoreTemplate.Areas.Identity.Pages.Account.Manage
                     var userId = await _userManager.GetUserIdAsync(user);
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
+            }
+
+            // Person data
+            await _personManager.SetFirstNameAsync(user, Input.FirstName);
+            await _personManager.SetLastNameAsync(user, Input.LastName);
+
+            if (Input.RegenerateUsername)
+            {
+                var newUserName = _usernameHelper.GenerateUsername(Input.FirstName, Input.LastName);
+                await _userManager.SetUserNameAsync(user, newUserName);
             }
 
             await _signInManager.RefreshSignInAsync(user);

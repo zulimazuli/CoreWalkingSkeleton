@@ -12,7 +12,7 @@ namespace CoreTemplate.Models
         public string CustomTag { get; set; }
          
         //[ForeignKey("PersonalInfo")]
-        public int? PersonalInformationId { get; set; }
-        public virtual PersonalInformation PersonalInfo { get; set; }
+        public int? PersonId { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

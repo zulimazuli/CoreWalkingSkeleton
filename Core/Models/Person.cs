@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CoreTemplate.Models
 {
-    public class PersonalInformation
+    public class Person
     { 
 
         public int Id { get; set; }

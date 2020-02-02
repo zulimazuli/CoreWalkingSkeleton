@@ -1,12 +1,18 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using CoreTemplate.Services;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IPersonManager personManager
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+
+        var user = await UserManager.GetUserAsync(User);
+        var displayName = (string) await personManager.GetAsync(user, x=>x.FirstName) ?? User.Identity.Name;
+
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @displayName!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

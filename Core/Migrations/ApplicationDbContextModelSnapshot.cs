@@ -90,7 +90,7 @@ namespace CoreTemplate.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PersonalInformationId")
+                    b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
@@ -119,14 +119,14 @@ namespace CoreTemplate.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("PersonalInformationId")
+                    b.HasIndex("PersonId")
                         .IsUnique()
-                        .HasFilter("[PersonalInformationId] IS NOT NULL");
+                        .HasFilter("[PersonId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("CoreTemplate.Models.PersonalInformation", b =>
+            modelBuilder.Entity("CoreTemplate.Models.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace CoreTemplate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PersonalInformation");
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -251,9 +251,9 @@ namespace CoreTemplate.Migrations
 
             modelBuilder.Entity("CoreTemplate.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("CoreTemplate.Models.PersonalInformation", "PersonalInfo")
+                    b.HasOne("CoreTemplate.Models.Person", "Person")
                         .WithOne("ApplicationUser")
-                        .HasForeignKey("CoreTemplate.Models.ApplicationUser", "PersonalInformationId");
+                        .HasForeignKey("CoreTemplate.Models.ApplicationUser", "PersonId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
