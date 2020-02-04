@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Log in";
-    Layout = "_LoginLayout";
+    Layout = "_EmptyLayout";
 }
 
 <div class="row justify-content-center">
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox small">
-                                        <input asp-for="Input.RememberMe" type="checkbox" class="custom-control-input">
+                                        <input asp-for="Input.RememberMe" type="checkbox" class="custom-control-input" data-val="false">
                                         <label asp-for="Input.RememberMe" class="custom-control-label"></label>
                                     </div>
                                 </div>

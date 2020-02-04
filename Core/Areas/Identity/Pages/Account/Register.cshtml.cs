@@ -55,6 +55,7 @@ namespace CoreTemplate.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
             [Display(Name = "First name")]
             public string FirstName { get; set; }
             
@@ -73,6 +74,7 @@ namespace CoreTemplate.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Required]
             [DataType(DataType.Password)]
             [RegistrationToken]
             [Display(Name = "Registration Token")]

@@ -10,7 +10,7 @@ namespace CoreTemplate.Attributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            return value.Equals(Token) ? ValidationResult.Success : new ValidationResult(ErrorMessage ?? RegistrationTokenErrorMessage);
+            return (string) value == Token ? ValidationResult.Success : new ValidationResult(ErrorMessage ?? RegistrationTokenErrorMessage);
         }
 
         // Needed for client-side validation (implements IClientModelValidator)
