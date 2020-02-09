@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using AutoMapper;
 using CoreTemplate.Data;
 using CoreTemplate.Helpers;
 using CoreTemplate.Services;
@@ -11,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FluentValidation.AspNetCore;
+
 // ReSharper disable All
 
 namespace CoreTemplate
@@ -37,9 +41,14 @@ namespace CoreTemplate
 
             //services.AddIdentity<ApplicationUser, ApplicationRole>(/*options => options.SignIn.RequireConfirmedAccount = true*/)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
-                
-            services.AddControllersWithViews();
+
+            services.AddControllersWithViews()
+                .AddFluentValidation(opt =>
+                {
+                    opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+                });
             services.AddRazorPages();
+            services.AddAutoMapper(typeof(Startup));
 
             services.ConfigureApplicationCookie(options =>
             {

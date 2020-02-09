@@ -2,6 +2,7 @@
 using CoreTemplate.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace CoreTemplate.Data
 {
@@ -13,6 +14,7 @@ namespace CoreTemplate.Data
         }
 
         public DbSet<Person> Person { get; set; }
+        public DbSet<Item> Items { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -25,6 +27,8 @@ namespace CoreTemplate.Data
                 .WithOne(u => u.Person)
                 .HasForeignKey<ApplicationUser>(u => u.PersonId);
 
+            builder.Entity<Item>()
+                .HasAlternateKey(x=>x.UniqueId);
 
 
             base.OnModelCreating(builder);
