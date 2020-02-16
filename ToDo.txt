@@ -1,6 +1,0 @@
-1 - lib manager (webpack?)
-2 - admin2 bootstrap template / CoreUI
-3 - AutoMapper
-
-
-100 - change solution/project name to something more meaningfull
