@@ -17,7 +17,9 @@ namespace UnitTests.Validators
         }
 
 
+        
         [Test]
+        [Ignore("Validation redundant")]
         public void ShouldHaveError_GuidIsEmpty()
         {
             _sut.ShouldHaveValidationErrorFor(item => item.UniqueId, Guid.Empty);

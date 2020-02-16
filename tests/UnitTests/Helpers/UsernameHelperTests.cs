@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using CoreTemplate.ApplicationCore.Helpers;
 using CoreTemplate.ApplicationCore.Identity;
 using FluentAssertions;
@@ -9,6 +10,8 @@ using UnitTests.Shared;
 
 namespace UnitTests.Helpers
 {
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [TestFixture]
     public class UsernameHelperTests
     {
         private Mock<UserManager<ApplicationUser>> _userManagerMock;
@@ -44,16 +47,17 @@ namespace UnitTests.Helpers
         {
             // Arrange
             string result = null;
-            var firstname = "John";
-            var lastname = "Smith";
+            var firstname = "Jonathan";
+            var lastname = "Yehonathan";
 
-            var existingUsernames = new[] { "jsmith", "jsmith1" };
-
-            var expectedResult = "jsmith2";
-
-            _userManagerMock.Setup(x => x.FindByNameAsync(existingUsernames[0])).ReturnsAsync(new ApplicationUser { UserName = existingUsernames[0] });
-            _userManagerMock.Setup(x => x.FindByNameAsync(existingUsernames[1])).ReturnsAsync(new ApplicationUser { UserName = existingUsernames[1] });
-
+            var expectedResult = "jyehonathan3";
+            
+            var existingUsernames = new[] { "jyehonathan", "jyehonathan1", "jyehonathan2" };
+            foreach (var username in existingUsernames)
+            {
+                _userManagerMock.Setup(x => x.FindByNameAsync(username)).ReturnsAsync(new ApplicationUser { UserName = username });
+            }
+            
             // Act
             _sut = new UsernameHelper(_userManagerMock.Object);
             result = await _sut.GenerateUniqueUsernameAsync(firstname, lastname);

@@ -18,19 +18,19 @@ namespace CoreTemplate.ApplicationCore.Helpers
 
         public async Task<string> GenerateUniqueUsernameAsync(string firstName, string lastName)
         {
-            var i = 0;
-            string username;
-            do
+            var generatedUsername= GenerateUsername(firstName, lastName);
+            var newUsername = generatedUsername;
+            var count = 0;
+            while (await _userManager.FindByNameAsync(newUsername) != null)
             {
-                var suffix = i == 0 ? null : i.ToString();
-                username = GenerateUsername(firstName, lastName, suffix);
-                i++;
-            } while (await _userManager.FindByNameAsync(username) != null);
+                newUsername = string.Concat(generatedUsername, (++count).ToString());
+            }
 
-            return username;
+            return newUsername;
         }
 
-        private string GenerateUsername(string firstName, string lastName, string suffix = null)
+        private string GenerateUsername(string firstName, string lastName, 
+            string prefix = null, string suffix = null)
         {
             var firstLetter = firstName.Substring(0, NumberOfFirstnameLetters);
             var followingLetters = lastName.Length >= MaxNumberOfLastnameLetters
@@ -42,7 +42,15 @@ namespace CoreTemplate.ApplicationCore.Helpers
                 .RemoveDiacritics()
                 .RemoveNonAlphabeticCharacters();
 
-            if (!string.IsNullOrWhiteSpace(suffix)) username = string.Concat(username, suffix);
+            if (!string.IsNullOrWhiteSpace(prefix))
+            {
+                username = string.Concat(prefix, username);
+            }
+
+            if (!string.IsNullOrWhiteSpace(suffix))
+            {
+                username = string.Concat(username, suffix);
+            }
 
             return username;
         }
