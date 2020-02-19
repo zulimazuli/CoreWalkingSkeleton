@@ -3,6 +3,9 @@ using System.Reflection;
 using AutoMapper;
 using CoreTemplate.ApplicationCore.Helpers;
 using CoreTemplate.ApplicationCore.Identity;
+using CoreTemplate.ApplicationCore.Models;
+using CoreTemplate.Infrastructure.Data;
+using CoreTemplate.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -70,6 +73,11 @@ namespace CoreTemplate
 
             services.AddTransient<IPersonManager, PersonManager>();
             services.AddTransient<IUsernameHelper, UsernameHelper>();
+
+            // ok services.AddScoped<IRepository<Item, int>, ItemRepository>();
+            //services.AddScoped<IRepository<Item, int>, ItemRepository>();
+            
+            services.AddScoped(typeof(IRepository<,>), typeof(EfCoreRepository<,>));
 
         }
 

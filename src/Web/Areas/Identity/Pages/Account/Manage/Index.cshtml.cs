@@ -59,9 +59,10 @@ namespace CoreTemplate.Web.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            var firstName = (string) await _personManager.GetAsync(user, x => x.FirstName);
-            var lastName = (string)await _personManager.GetAsync(user, x => x.LastName);
+            var person = await _personManager.GetPersonAsync(user);
+            
+            var firstName = person.FirstName;
+            var lastName = person.LastName;
 
             Username = userName;           
 

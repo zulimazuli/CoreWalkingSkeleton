@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CoreTemplate.ApplicationCore.Models;
+using CoreTemplate.Infrastructure.Data;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,16 +12,19 @@ namespace CoreTemplate.Web.Controllers
     public class ItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IRepository<Item, int> _itemRepository;
 
-        public ItemsController(ApplicationDbContext context)
+        public ItemsController(ApplicationDbContext context, IRepository<Item, int> itemRepository)
         {
             _context = context;
+            _itemRepository = itemRepository;
         }
 
         // GET: Items
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Items.ToListAsync());
+            return View(await _itemRepository.GetAllAsync());
+            //return View(await _context.Items.ToListAsync());
         }
 
         // TODO: Move to models

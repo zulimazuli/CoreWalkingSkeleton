@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using CoreTemplate.ApplicationCore.Entities;
 
 namespace CoreTemplate.ApplicationCore.Models
 {
-    public class Item
+    public class Item : BaseEntity<int>
     {
-        [Key]
-        public int Id { get; set; }
         [ScaffoldColumn(false)]
         public Guid UniqueId { get; set; }
         [Required]
