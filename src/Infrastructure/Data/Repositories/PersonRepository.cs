@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CoreTemplate.ApplicationCore.Models;
-using Infrastructure.Data;
+﻿using CoreTemplate.ApplicationCore.Entities;
 
 namespace CoreTemplate.Infrastructure.Data.Repositories
 {
-    public class PersonRepository : EfCoreRepository<Person, int>
-    {
-        public PersonRepository(ApplicationDbContext context) : base(context)
-        {
-        }
-    }
+    //public class PersonRepository : EfCoreRepository<Person>
+    //{
+    //    public PersonRepository(ApplicationDbContext context) : base(context)
+    //    {
+    //    }
+    //}
 }

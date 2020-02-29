@@ -1,11 +1,11 @@
 using System;
 using System.Reflection;
 using AutoMapper;
+using CoreTemplate.ApplicationCore;
 using CoreTemplate.ApplicationCore.Helpers;
 using CoreTemplate.ApplicationCore.Identity;
-using CoreTemplate.ApplicationCore.Models;
+using CoreTemplate.ApplicationCore.Interfaces;
 using CoreTemplate.Infrastructure.Data;
-using CoreTemplate.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FluentValidation.AspNetCore;
-using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 // ReSharper disable All
@@ -33,9 +33,13 @@ namespace CoreTemplate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+            
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
             //services.AddDefaultIdentity<ApplicationUser>()
             //    .AddRoles<ApplicationRole>()
@@ -43,18 +47,16 @@ namespace CoreTemplate
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
 
             //services.AddIdentity<ApplicationUser, ApplicationRole>(/*options => options.SignIn.RequireConfirmedAccount = true*/)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews()
-                .AddFluentValidation(opt =>
-                {
-                    opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-                });
+                .AddFluentValidation(opt => opt.RegisterValidatorsFromAssemblyContaining<IApplicationDbContext>());
+
             services.AddRazorPages();
-            services.AddAutoMapper(typeof(Startup));
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -71,14 +73,13 @@ namespace CoreTemplate
 
             //services.Configure<ApplicationOptions>(Configuration.GetSection("ApplicationOptions"));
 
-            services.AddTransient<IPersonManager, PersonManager>();
+            services.AddTransient<IPersonService, PersonService>();
             services.AddTransient<IUsernameHelper, UsernameHelper>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            // ok services.AddScoped<IRepository<Item, int>, ItemRepository>();
-            //services.AddScoped<IRepository<Item, int>, ItemRepository>();
-            
-            services.AddScoped(typeof(IRepository<,>), typeof(EfCoreRepository<,>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfCoreRepository<>));
 
+            services.AddApplicatinCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

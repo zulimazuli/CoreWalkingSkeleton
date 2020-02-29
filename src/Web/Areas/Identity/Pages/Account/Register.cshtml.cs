@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using CoreTemplate.ApplicationCore.Entities;
 using CoreTemplate.ApplicationCore.Helpers;
 using CoreTemplate.ApplicationCore.Identity;
 using CoreTemplate.ApplicationCore.Models;

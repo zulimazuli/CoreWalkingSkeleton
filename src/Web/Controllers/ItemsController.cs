@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using CoreTemplate.ApplicationCore.Entities;
 using CoreTemplate.ApplicationCore.Models;
+using CoreTemplate.ApplicationCore.Specifications;
 using CoreTemplate.Infrastructure.Data;
-using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,19 +15,39 @@ namespace CoreTemplate.Web.Controllers
     public class ItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IRepository<Item, int> _itemRepository;
+        private readonly IRepository<Item> _itemRepository;
+        private readonly IMapper _mapper;
 
-        public ItemsController(ApplicationDbContext context, IRepository<Item, int> itemRepository)
+        public ItemsController(ApplicationDbContext context, IRepository<Item> itemRepository, IMapper mapper)
         {
             _context = context;
             _itemRepository = itemRepository;
+            _mapper = mapper;
         }
 
         // GET: Items
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var items = await _itemRepository.GetAllAsync();
+        //    List<ItemViewModel> itemVMs = _mapper.Map<List<ItemViewModel>>(items.ToList());
+        //    return View(itemVMs);
+        //}
+
+        public async Task<IActionResult> Index([FromQuery]Paginated<ItemViewModel> paginationQuery)
         {
-            return View(await _itemRepository.GetAllAsync());
-            //return View(await _context.Items.ToListAsync());
+            
+            var parameters = new BasicQueryParameters<Item>();
+            parameters.ApplyPaging(paginationQuery.PageNumber, paginationQuery.PageSize);
+
+            var itemsCount = await _itemRepository.CountAsync();
+            
+            var items = await _itemRepository.ListAsync(parameters);
+
+            List<ItemViewModel> itemVMs = _mapper.Map<List<ItemViewModel>>(items.ToList());
+            paginationQuery.Model = itemVMs;
+            paginationQuery.Count = itemsCount;
+
+            return View(paginationQuery);
         }
 
         // TODO: Move to models
@@ -147,19 +170,19 @@ namespace CoreTemplate.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Priority")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Priority")] ItemViewModel itemVM)
         {
-            if (id != item.Id)
+            if (id != itemVM.Id)
             {
                 return NotFound();
             }
-
+            var item = await _itemRepository.Get(id);
+            _mapper.Map(itemVM, item);
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(item);
-                    await _context.SaveChangesAsync();
+                    await _itemRepository.UpdateAsync(item);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

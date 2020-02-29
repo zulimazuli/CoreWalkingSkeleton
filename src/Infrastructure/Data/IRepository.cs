@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using CoreTemplate.ApplicationCore.Entities;
+using CoreTemplate.ApplicationCore.Specifications;
 
 namespace CoreTemplate.Infrastructure.Data
 {
-    public interface IRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
+    public interface IRepository<TEntity> where TEntity : AuditableEntity
     {
         Task<IReadOnlyList<TEntity>> GetAllAsync();
-        //todo Task<List<TEntity>> ListAsync(ISpecification<TEntity> spec);
-        Task<TEntity> Get(TKey id);
+        Task<IReadOnlyList<TEntity>> ListAsync(IQueryParameters<TEntity> parameters);
+        Task<TEntity> Get(object id);
         Task<TEntity> AddAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
-        Task<TEntity> DeleteAsync(TKey id);
+        Task<TEntity> DeleteAsync(object id);
+        Task<int> CountAsync();
     }
 }

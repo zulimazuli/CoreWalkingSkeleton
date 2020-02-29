@@ -1,11 +1,10 @@
-﻿using CoreTemplate.ApplicationCore.Entities;
-using CoreTemplate.ApplicationCore.Identity;
+﻿using CoreTemplate.ApplicationCore.Identity;
 
-namespace CoreTemplate.ApplicationCore.Models
+namespace CoreTemplate.ApplicationCore.Entities
 {
-    public class Person : BaseEntity<int>
-    { 
-
+    public class Person : AuditableEntity
+    {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

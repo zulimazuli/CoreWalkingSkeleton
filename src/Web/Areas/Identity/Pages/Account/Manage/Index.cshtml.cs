@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using CoreTemplate.ApplicationCore.Helpers;
 using CoreTemplate.ApplicationCore.Identity;
-using Infrastructure.Data;
+using CoreTemplate.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,13 +14,13 @@ namespace CoreTemplate.Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IPersonManager _personManager;
+        private readonly IPersonService _personManager;
         private readonly IUsernameHelper _usernameHelper;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IPersonManager personManager,
+            IPersonService personManager,
             IUsernameHelper usernameHelper)
         {
             _userManager = userManager;

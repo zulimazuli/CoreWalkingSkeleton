@@ -1,7 +1,7 @@
-﻿using CoreTemplate.ApplicationCore.Models;
+﻿using CoreTemplate.ApplicationCore.Entities;
 using FluentValidation;
 
-namespace CoreTemplate.Web.Validators
+namespace CoreTemplate.ApplicationCore.Validators
 {
     public class ItemValidator : AbstractValidator<Item>
     {

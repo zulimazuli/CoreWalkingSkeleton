@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using CoreTemplate.ApplicationCore.Entities;
 using CoreTemplate.ApplicationCore.Identity;
-using CoreTemplate.ApplicationCore.Models;
 
-namespace Infrastructure.Data
+namespace CoreTemplate.Infrastructure.Data
 {
-    public interface IPersonManager
+    public interface IPersonService
     {
         //TODO: extract to repo
         Task<object> GetAsync(ApplicationUser user, Expression<Func<Person, object>> expression);

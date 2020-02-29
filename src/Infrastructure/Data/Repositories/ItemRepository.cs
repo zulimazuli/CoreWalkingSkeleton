@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CoreTemplate.ApplicationCore.Models;
-using Infrastructure.Data;
+using CoreTemplate.ApplicationCore.Entities;
 
 namespace CoreTemplate.Infrastructure.Data.Repositories
 {
-    public class ItemRepository : EfCoreRepository<Item, int>
-    {
-        public ItemRepository(ApplicationDbContext context) : base(context)
-        {
-        }
-    }
+    //public class ItemRepository : EfCoreRepository<Item>
+    //{
+    //    public ItemRepository(ApplicationDbContext context) : base(context)
+    //    {
+    //    }
+    //}
 }

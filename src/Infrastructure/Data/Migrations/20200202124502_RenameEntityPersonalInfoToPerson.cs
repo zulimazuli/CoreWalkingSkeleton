@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Data.Migrations
+namespace CoreTemplate.Infrastructure.Data.Migrations
 {
     public partial class RenameEntityPersonalInfoToPerson : Migration
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using CoreTemplate.ApplicationCore.Models;
+using CoreTemplate.ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace CoreTemplate.ApplicationCore.Identity

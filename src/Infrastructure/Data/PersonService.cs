@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using CoreTemplate.ApplicationCore.Entities;
 using CoreTemplate.ApplicationCore.Identity;
-using CoreTemplate.ApplicationCore.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data
+namespace CoreTemplate.Infrastructure.Data
 {
-    public class PersonManager : IPersonManager
+    public class PersonService : IPersonService
     {
         
         private readonly ApplicationDbContext _context;
 
-        public PersonManager(ApplicationDbContext context)
+        public PersonService(ApplicationDbContext context)
         {
             _context = context;
         }

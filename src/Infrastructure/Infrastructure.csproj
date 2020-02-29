@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20200209165207_ItemEntity.cs" />
+    <Compile Remove="Data\Migrations\20200209165207_ItemEntity.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200229165743_AuditableEntity.cs" />
+    <Compile Remove="Data\Migrations\20200229165743_AuditableEntity.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200229165959_AuditableEntity.cs" />
+    <Compile Remove="Data\Migrations\20200229165959_AuditableEntity.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
